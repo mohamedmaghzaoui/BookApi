@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookLibrary.Migrations
 {
     [DbContext(typeof(BookContext))]
-    [Migration("20250604110707_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250608015347_changedDb")]
+    partial class changedDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -19,7 +19,7 @@ namespace BookLibrary.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.5");
 
-            modelBuilder.Entity("Ebook", b =>
+            modelBuilder.Entity("Models.Media", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -29,32 +29,36 @@ namespace BookLibrary.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("MediaType")
+                        .IsRequired()
+                        .HasMaxLength(13)
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("id");
 
-                    b.ToTable("Ebooks");
+                    b.ToTable("Books");
+
+                    b.HasDiscriminator<string>("MediaType").HasValue("Media");
+
+                    b.UseTphMappingStrategy();
+                });
+
+            modelBuilder.Entity("Ebook", b =>
+                {
+                    b.HasBaseType("Models.Media");
+
+                    b.HasDiscriminator().HasValue("Ebook");
                 });
 
             modelBuilder.Entity("PaperBook", b =>
                 {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                    b.HasBaseType("Models.Media");
 
-                    b.Property<string>("Author")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("id");
-
-                    b.ToTable("PaperBooks");
+                    b.HasDiscriminator().HasValue("PaperBook");
                 });
 #pragma warning restore 612, 618
         }
