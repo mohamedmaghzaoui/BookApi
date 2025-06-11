@@ -3,3 +3,5 @@
 npm install
 # run app
 npm run dev
+# build the app
+Build the app 

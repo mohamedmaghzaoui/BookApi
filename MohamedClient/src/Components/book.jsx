@@ -9,12 +9,12 @@ export function Book() {
   const [createTitle, setCreateTitle] = useState("");
   const [createAuthor, setCreateAuthor] = useState("");
   const [createMediaType, setCreateMediaType] = useState("");
-
   const [searchAuthor, setSearchAuthor] = useState("");
   const [searchTitle, setSearchTitle] = useState("");
 
   const [modifyId, setModifyId] = useState(null);
   const [modifyTitle, setModifyTitle] = useState("");
+  
   const [modifyAuthor, setModifyAuthor] = useState("");
   const [modifyMediaType, setModifyMediaType] = useState("");
 
@@ -100,8 +100,6 @@ export function Book() {
     }
   };
 
- 
-
   const searchBook = (e) => {
     e.preventDefault();
     fetchBooks(searchAuthor, searchTitle);
@@ -119,12 +117,12 @@ export function Book() {
 
       <form onSubmit={searchBook}>
         <input
-          placeholder="Search by author"
+          placeholder="Search with author"
           value={searchAuthor}
           onChange={(e) => setSearchAuthor(e.target.value)}
         />
         <input
-          placeholder="Search by title"
+          placeholder="Search with title"
           value={searchTitle}
           onChange={(e) => setSearchTitle(e.target.value)}
         />
@@ -135,6 +133,7 @@ export function Book() {
       </form>
 
       <h2>Add New Book</h2>
+      {/* add book form */}
       <form onSubmit={createNewBook}>
         <input
           placeholder="Title"
@@ -156,7 +155,7 @@ export function Book() {
         </select>
         <button type="submit">Create</button>
       </form>
-
+      {/* show all books */}
       <h2>Books</h2>
       {books.length === 0 && <p>No books found.</p>}
       <ul>
@@ -168,7 +167,7 @@ export function Book() {
           </li>
         ))}
       </ul>
-
+      {/* modify books form*/}
       {showModifyForm && (
         <>
           <h2>Modify Book</h2>
