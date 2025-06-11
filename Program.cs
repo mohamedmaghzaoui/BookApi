@@ -30,9 +30,10 @@ builder.Services.AddControllers();
 
 
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen();
 var app = builder.Build();
-
+//use swager 
 
 app.UseSwagger();
 app.UseSwaggerUI();
